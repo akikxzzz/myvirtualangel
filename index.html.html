@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virtual Angel ♡</title>
+<style>
+@font-face{
+font-family:'CatchyMager';
+src:url('CatchyMager.ttf');
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+height:100vh;overflow:hidden;
+background:url('fondo.png') center/cover no-repeat;
+display:flex;justify-content:center;align-items:center;
+}
+.pantalla{display:none;text-align:center;max-width:950px;padding:20px;}
+.activa{display:block;}
+h1,p,#contador,.sobre-texto{
+font-family:'CatchyMager',cursive;color:#4c3b68;
+}
+h1{font-size:4rem;font-weight:normal;}
+p{font-size:1.8rem;margin-top:20px;line-height:1.5;}
+button{
+font-family:Arial,sans-serif;font-size:1.2rem;
+padding:15px 35px;border:none;border-radius:20px;
+margin:10px;cursor:pointer;
+}
+.rosa{background:#ffd2ea;}
+.azul{background:#d7ecff;}
+.morado{background:#ead8ff;}
+
+.carta{
+background:rgba(255,255,255,.8);
+padding:30px;border-radius:25px;
+max-height:80vh;overflow:auto;
+}
+
+.sobre{
+margin:30px auto;
+width:260px;height:170px;
+background:#ffe6ef;
+border-radius:10px;
+position:relative;
+cursor:pointer;
+box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+.sobre:before{
+content:'';
+position:absolute;
+top:0;left:0;
+width:0;height:0;
+border-left:130px solid transparent;
+border-right:130px solid transparent;
+border-top:90px solid #ffcfe2;
+}
+.sobre-texto{
+position:absolute;
+bottom:25px;
+width:100%;
+font-size:1.4rem;
+}
+#contador{
+display:none;
+margin-top:20px;
+font-size:1.4rem;
+}
+
+.corazon{
+position:fixed;
+bottom:-50px;
+pointer-events:none;
+animation:subir linear forwards;
+}
+@keyframes subir{
+from{transform:translateY(0);opacity:.9;}
+to{transform:translateY(-120vh);opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<div id="inicio" class="pantalla activa">
+<h1>Amorcito,<br>¿Sabes qué día es hoy?</h1>
+<button class="morado" onclick="mostrar('miercoles')">Miércoles</button>
+<button class="azul" onclick="mostrar('significado')">17 de Junio</button>
+</div>
+
+<div id="miercoles" class="pantalla">
+<h1>O sea, sí, pero no</h1>
+<p>O sea sí, pero no es la respuesta que estoy buscando.</p>
+<button class="morado" onclick="mostrar('inicio')">Otra vez</button>
+</div>
+
+<div id="significado" class="pantalla">
+<h1>Amorcito,<br>¿Sabes lo que significa?</h1>
+<button class="rosa" onclick="mostrar('carta')">Sí</button>
+<button class="azul" onclick="mostrar('adios')">No</button>
+</div>
+
+<div id="adios" class="pantalla">
+<h1>Entonces vuelve cuando lo descubras.</h1>
+<p>Te estaré esperando ♡</p>
+</div>
+
+<div id="carta" class="pantalla">
+<h1>Entonces esto es para ti ♡</h1>
+<p>¿Te gustaría leerla?</p>
+<button class="rosa" onclick="mostrar('abrirCarta')">A ver</button>
+<button class="azul" onclick="mostrar('rechazarCarta')">No, gracias</button>
+</div>
+
+<div id="rechazarCarta" class="pantalla">
+<h1>Bueno...</h1>
+<p>Pero me tomó mucho tiempo escribirla. ♡</p>
+<button class="morado" onclick="mostrar('abrirCarta')">Mostrar de todas formas</button>
+</div>
+
+<div id="abrirCarta" class="pantalla">
+<div class="carta">
+<h1>Para ti, Ash ♡</h1>
+
+<p>
+Hoy cumplimos seis meses juntas y no puedo evitar sentirme inmensamente feliz por todo lo que hemos construido.
+Gracias por cada abrazo, cada sonrisa, cada conversación y cada momento en el que me has hecho sentir querida.
+<br><br>
+Contigo aprendí que la felicidad puede encontrarse en las cosas más simples: compartir una tarde, escuchar tu voz,
+acostarnos a platicar o simplemente saber que estás aquí.
+<br><br>
+Eres una de las personas más importantes de mi vida, mi refugio en los días difíciles y una de las razones por las que sonrío tanto.
+<br><br>
+Gracias por estos seis meses de amor, paciencia y compañía.
+Si pudiera elegir una y otra vez, seguiría eligiéndote a ti.
+<br><br>
+Te amo muchísimo, amorcito.
+</p>
+
+<div class="sobre" onclick="mostrarContador()">
+<div class="sobre-texto">Abrir contador ♡</div>
+</div>
+
+<div id="contador"></div>
+
+</div>
+</div>
+
+<script>
+function mostrar(id){
+document.querySelectorAll('.pantalla').forEach(p=>p.classList.remove('activa'));
+document.getElementById(id).classList.add('activa');
+
+if(id==="adios"){
+setTimeout(()=>{
+document.body.innerHTML="";
+location.replace("about:blank");
+},3000);
+}
+}
+
+function actualizarContador(){
+const inicio=new Date("2025-12-17T00:00:00");
+const ahora=new Date();
+const horas=Math.floor(Math.abs(ahora-inicio)/(1000*60*60));
+
+document.getElementById("contador").innerHTML=
+"Han pasado <b>"+horas.toLocaleString()+" horas</b> desde el 17 de diciembre de 2025 ♡";
+}
+actualizarContador();
+setInterval(actualizarContador,1000);
+
+function mostrarContador(){
+document.getElementById("contador").style.display="block";
+}
+
+function crearCorazon(){
+const c=document.createElement("div");
+c.className="corazon";
+c.innerHTML="🫧💗";
+c.style.left=Math.random()*100+"vw";
+c.style.fontSize=(20+Math.random()*20)+"px";
+c.style.animationDuration=(6+Math.random()*4)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),10000);
+}
+setInterval(crearCorazon,500);
+</script>
+
+</body>
+</html>
